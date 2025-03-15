@@ -13,6 +13,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install zip
 
+# install composer
+COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer
+
 # Set the working directory
 COPY . /var/www/app
 COPY .env.example /var/www/app/.env
@@ -20,10 +24,6 @@ WORKDIR /var/www/app
 
 RUN chown -R www-data:www-data /var/www/app \
     && chmod -R 775 /var/www/app/storage
-
-
-# install composer
-COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
 
 # copy composer.json to workdir & install dependencies
 COPY composer.json ./
