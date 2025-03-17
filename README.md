@@ -1,3 +1,5 @@
+**Zadanie wykonane w ~4h**
+
 ## Start
 
 ``docker compose up -d --build``
